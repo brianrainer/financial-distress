@@ -40,15 +40,19 @@ def perf_measure(y_actual, y_hat):
     if y_hat[i]==0 and y_actual[i]!=y_hat[i]:
        FN += 1
 
+
   print "TP",TP
   print "FP",FP
   print "TN",TN
   print "FN",FN
-  print "TP Rate(sensitivity)",(float(TP) / float(TP + FN))
-  # print "FP Rate",(float(FP) / float(FP + TN))
-  print "TN Rate(specificity)",(float(TN) / float(TN + FP))
-  # print "FN Rate",(float(FN) / float(FN + TP))
-  print "f1 socre",f1_score(y_actual,y_hat,average='micro')
+  print "Error Rate", (float(FP + FN) / float(FP + FN + TP + TN))
+  print "Accuracy", (float(TP + TN) / float(FP + FN + TP + TN))
+  print "Precision",(float(TP) / float(TP + FP))
+  
+  print "Sensitivity (TP Rate)",(float(TP) / float(TP + FN))
+  print "Specificity (TN Rate)",(float(TN) / float(TN + FP))
+  
+  print "F1 Score",f1_score(y_actual,y_hat,average='micro')
   return(TP, FP, TN, FN)
 
 def knnhelper(x,y):
