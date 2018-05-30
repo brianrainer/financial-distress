@@ -4,6 +4,7 @@ import pandas as pd
 
 from imblearn.under_sampling import TomekLinks
 from imblearn.under_sampling import EditedNearestNeighbours
+from imblearn.under_sampling import RandomUnderSampler
 
 from imblearn.over_sampling import SMOTE
 from imblearn.over_sampling import ADASYN
@@ -141,11 +142,11 @@ classfication(sm_data,sm_target,"Data after oversampling using SMOTE")
 
 # # Start: undersampling using tomekLink
 tlink = TomekLinks(random_state=42, ratio='auto')
-tl_data, tl_target = tlink.fit_sample(X_data,target)
-# # print('Resampled dataset shape {}'.format(Counter(tl_target)))
+tl_data, tl_target = tlink.fit_sample(ada_data,ada_target)
+print('Resampled dataset shape {}'.format(Counter(tl_target)))
 # # End: undersampling using tomekLink
 
-classfication(tl_data, tl_target, "Data after undersampling using TomekLink")
+classfication(tl_data, tl_target, "ADASYN Data after cleaning using TomekLink")
 
 # # Start: undersampling using CondensedNearesNeighbors
 enn = EditedNearestNeighbours(random_state=42,n_neighbors=1,ratio='auto')
@@ -155,6 +156,13 @@ enn_data, enn_target  = enn.fit_sample(X_data,target)
 
 classfication(enn_data,enn_target,"Data after under sampling using Edited Nearest Neighbors")
 
+# Start : undersampling using RandomUnderSampler
+rus = RandomUnderSampler(random_state=42)
+rus_data, rus_target = rus.fit_sample(X_data,target)
+print('Resampled dataset shape {}'.format(Counter(rus_target)))
+# End : undersampling using RandomUnderSampler
+
+classfication(rus_data, rus_target, "Data after undersampling using RandomUnderSampler")
 
 # # Start: imbalance handling using smote-enn
 smoteenn = SMOTEENN(random_state=42,smote=smote,enn=enn,ratio='auto')
