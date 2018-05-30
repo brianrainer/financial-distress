@@ -40,17 +40,12 @@ def perf_measure(y_actual, y_hat):
     if y_hat[i]==0 and y_actual[i]!=y_hat[i]:
        FN += 1
 
-
-  print "TP",TP
-  print "FP",FP
-  print "TN",TN
-  print "FN",FN
-  print "Error Rate", (float(FP + FN) / float(FP + FN + TP + TN))
-  print "Accuracy", (float(TP + TN) / float(FP + FN + TP + TN))
-  print "Precision",(float(TP) / float(TP + FP))
-  
-  print "Sensitivity (TP Rate)",(float(TP) / float(TP + FN))
-  print "Specificity (TN Rate)",(float(TN) / float(TN + FP))
+  print "TP: ",TP, "| FP: ",FP, "| TN: ",TN," | FN: ",FN
+  print "ERR: ", (float(FP + FN) / float(FP + FN + TP + TN)), "| ACC: ", (float(TP + TN) / float(FP + FN + TP + TN))
+  if (TP + FP):
+    print "PREC : ",(float(TP) / float(TP + FP))
+    
+  print "Sensitivity (TP Rate)",(float(TP) / float(TP + FN)), "| Specificity (TN Rate)",(float(TN) / float(TN + FP))
   
   print "F1 Score",f1_score(y_actual,y_hat,average='micro')
   return(TP, FP, TN, FN)
@@ -58,7 +53,7 @@ def perf_measure(y_actual, y_hat):
 def knnhelper(x,y):
   xtrain, xtest, ytrain, ytest = train_test_split(x,y,test_size=0.30, random_state=42,stratify=y)
 
-  neig = knn()
+  neig = knn(n_neighbors=3, algorithm='kd_tree')
   neig = neig.fit(xtrain,ytrain)
   ans = neig.predict(xtest)
 
