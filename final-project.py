@@ -53,7 +53,7 @@ def perf_measure(y_actual, y_hat):
 def knnhelper(x,y):
   xtrain, xtest, ytrain, ytest = train_test_split(x,y,test_size=0.30, random_state=42,stratify=y)
 
-  neig = knn(n_neighbors=3, algorithm='kd_tree')
+  neig = knn(n_neighbors=2, algorithm='kd_tree')
   neig = neig.fit(xtrain,ytrain)
   ans = neig.predict(xtest)
 
